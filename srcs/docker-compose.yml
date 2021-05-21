@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: "nginx"
+    build:
+      context: .
+      dockerfile: requirements/nginx/Dockerfile
+    ports:
+      - 443:443
+      - 8000:9000
+    volumes:
+      - /Users/kmacquet/desktop/cursus42/inception/data/wordpress:/var/www/html
+
+  wordpress:
+    container_name: "wordpress"
+    build:
+      context: .
+      dockerfile: requirements/wordpress/Dockerfile
+    depends_on:
+      - nginx
+      - db
+    ports:
+      - 8001:9000
+      - 8002:3306
+    volumes:
+      - /Users/kmacquet/desktop/cursus42/inception/data/db:/var/www/html
+
+  db:
+    container_name: "db"
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
+    ports:
+      - 8003:3306
+    volumes:
+      - /Users/kmacquet/desktop/cursus42/inception/data/db:/var/lib/mysql
