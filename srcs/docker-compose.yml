@@ -1,18 +1,22 @@
 version: '3.8'
 
 services:
-  nginx:
-    container_name: "nginx"
+  db:
+    restart: always
+    container_name: "db"
     build:
       context: .
-      dockerfile: requirements/nginx/Dockerfile
-    ports:
-      - 443:443
-      - 8000:9000
+      dockerfile: requirements/mariadb/Dockerfile
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - /Users/kmacquet/desktop/cursus42/inception/data/wordpress:/var/www/html
+      - /Users/kmacquet/desktop/cursus42/inception/data/db:/var/lib/mysql
 
   wordpress:
+    restart: always
     container_name: "wordpress"
     build:
       context: .
@@ -21,17 +25,22 @@ services:
       - nginx
       - db
     ports:
-      - 8001:9000
-      - 8002:3306
+      - 8080:80
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_TABLE_PREFIX: wp_
     volumes:
       - /Users/kmacquet/desktop/cursus42/inception/data/db:/var/www/html
 
-  db:
-    container_name: "db"
+  nginx:
+    restart: always
+    container_name: "nginx"
     build:
       context: .
-      dockerfile: requirements/mariadb/Dockerfile
-    ports:
-      - 8003:3306
+      dockerfile: requirements/nginx/Dockerfile
     volumes:
-      - /Users/kmacquet/desktop/cursus42/inception/data/db:/var/lib/mysql
+      - /Users/kmacquet/desktop/cursus42/inception/data/wordpress:/var/www/html
