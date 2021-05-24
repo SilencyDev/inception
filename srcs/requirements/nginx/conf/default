@@ -19,7 +19,6 @@ server {
 
         ssl_certificate /etc/nginx/ssl/localhost.pem;
         ssl_certificate_key /etc/nginx/ssl/localhost.key;
-		ssl_protocols       TLSv1.2 TLSv1.3;
 
         server_name localhost;
         #
@@ -33,7 +32,7 @@ server {
         # Don't use them in a production server!
         #
         # include snippets/snakeoil.conf;
-        root /var/www/localhost;
+        root /var/www/wordpress;
 
         # Add index.php to the list if you are using PHP
         index index.php index.html index.htm index.nginx-debian.html;
@@ -43,7 +42,7 @@ server {
                 # First attempt to serve request as file, then
                 # as directory, then fall back to displaying a 404.
                 try_files $uri $uri/ =404;
-				autoindex on;
+                autoindex on;
         }
 
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
@@ -54,6 +53,7 @@ server {
         #       # With php7.0-cgi alone:
         #       fastcgi_pass 127.0.0.1:9000;
         #       # With php7.0-fpm:
+               #fastcgi_pass wordpress:9000;
                fastcgi_pass unix:/run/php/php7.3-fpm.sock;
         }
 

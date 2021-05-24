@@ -5,7 +5,7 @@ RUN apt-get -y install nginx
 RUN apt-get -y install openssl
 
 COPY requirements/nginx/tools/start.sh ./
-COPY requirements/nginx/conf/nginx.conf ./
+COPY requirements/nginx/conf/default ./
 
 CMD bash /start.sh
 
