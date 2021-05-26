@@ -7,5 +7,6 @@ RUN apt-get -y install php-json php-mbstring
 
 COPY requirements/wordpress/tools/start.sh ./
 COPY requirements/wordpress/conf/wp-config.php ./
+COPY requirements/wordpress/conf/www.conf ./
 
 CMD bash /start.sh

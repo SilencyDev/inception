@@ -8,5 +8,3 @@ COPY requirements/nginx/tools/start.sh ./
 COPY requirements/nginx/conf/default ./
 
 CMD bash /start.sh
-
-EXPOSE 443/tcp

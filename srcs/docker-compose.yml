@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.5'
 
 services:
   nginx:
@@ -6,33 +6,15 @@ services:
     container_name: "nginx"
     networks:
       - inception
+    depends_on:
+      - wordpress
     ports:
       - 443:443
-    expose:
-      - "9000"
     build:
       context: .
       dockerfile: requirements/nginx/Dockerfile
     volumes:
-      - /home/silencydev/Desktop/42/inception/data/wordpress:/var/www/wordpress
-
-  db:
-    restart: always
-    container_name: "db"
-    build:
-      context: .
-      dockerfile: requirements/mariadb/Dockerfile
-    networks:
-      - inception
-    expose:
-      - "3306"
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - /home/silencydev/Desktop/42/inception/data/db:/var/lib/mysql
+      - wordpress:/var/www/wordpress
 
   wordpress:
     restart: always
@@ -40,22 +22,50 @@ services:
     build:
       context: .
       dockerfile: requirements/wordpress/Dockerfile
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     networks:
       - inception
     expose:
       - "9000"
-      - "3306"
-    environment: 
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
-      WORDPRESS_TABLE_PREFIX: wp_
+    # environment: 
+    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    #   WORDPRESS_DB_HOST: db:3306
+    #   WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+    #   WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+    #   WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+    #   WORDPRESS_TABLE_PREFIX: wp_
     volumes:
-      - /home/silencydev/Desktop/42/inception/data/db:/var/www/html
+      - wordpress:/var/www/wordpress
+
+  # db:
+  #   restart: always
+  #   container_name: "db"
+  #   build:
+  #     context: .
+  #     dockerfile: requirements/mariadb/Dockerfile
+  #   networks:
+  #     - inception
+  #   expose:
+  #     - "3306"
+  #   environment:
+  #     MYSQL_DATABASE: wordpress
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   volumes:
+  #     - /Users/kmacquet/Desktop/cursus42/inception/data/mysql:/var/lib/mysql
+volumes:
+  wordpress:
+    driver_opts:
+      type: "local"
+      o: bind
+      device: "/Users/kmacquet/Desktop/cursus42/inception/data/wordpress"
+  db:
+    driver_opts:
+      type: "local"
+      o: bind
+      device: "/Users/kmacquet/Desktop/cursus42/inception/data/mysql"
 
 networks:
   inception:

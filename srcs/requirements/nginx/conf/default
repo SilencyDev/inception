@@ -19,6 +19,7 @@ server {
 
         ssl_certificate /etc/nginx/ssl/localhost.pem;
         ssl_certificate_key /etc/nginx/ssl/localhost.key;
+        #ssl_protocols TLSv1.2 TLSv1.3;
 
         server_name localhost;
         #
@@ -48,13 +49,13 @@ server {
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
         #
         location ~ \.php$ {
-               include snippets/fastcgi-php.conf;
-        #
-        #       # With php7.0-cgi alone:
-        #       fastcgi_pass 127.0.0.1:9000;
-        #       # With php7.0-fpm:
-               #fastcgi_pass wordpress:9000;
-               fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+                try_files $uri =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass wordpress:9000;
+                fastcgi_index index.php;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param PATH_INFO $fastcgi_path_info;
         }
 
         # deny access to .htaccess files, if Apache's document root
