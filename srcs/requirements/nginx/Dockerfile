@@ -1,10 +1,12 @@
-FROM debian:buster
+FROM alpine:3.13
 
-RUN apt-get update
-RUN apt-get -y install nginx
-RUN apt-get -y install openssl
+RUN apk update
+RUN apk add vim nginx openssl
+RUN mkdir -p /run/nginx
+RUN mkdir etc/nginx/tls
+RUN openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/tls/localhost.crt \
+		-keyout /etc/nginx/tls/localhost.key -subj '/CN=localhost'
 
-COPY requirements/nginx/tools/start.sh ./
-COPY requirements/nginx/conf/default ./
+COPY ./conf/default.conf /etc/nginx/http.d/default.conf
 
-CMD bash /start.sh
+CMD [ "nginx", "-g", "daemon off;" ]

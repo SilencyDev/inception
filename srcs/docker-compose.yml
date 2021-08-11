@@ -1,73 +1,13 @@
-version: '3.5'
+version: '3.0'
 
 services:
   nginx:
-    restart: always
-    container_name: "nginx"
-    networks:
-      - inception
-    depends_on:
-      - wordpress
+    build: requirements/nginx/.
+    image: nginx
     ports:
       - 443:443
-    build:
-      context: .
-      dockerfile: requirements/nginx/Dockerfile
-    volumes:
-      - wordpress:/var/www/wordpress
-
-  wordpress:
-    restart: always
-    container_name: "wordpress"
-    build:
-      context: .
-      dockerfile: requirements/wordpress/Dockerfile
-    # depends_on:
-    #   - db
     networks:
       - inception
-    expose:
-      - "9000"
-    # environment: 
-    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    #   WORDPRESS_DB_HOST: db:3306
-    #   WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-    #   WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-    #   WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
-    #   WORDPRESS_TABLE_PREFIX: wp_
-    volumes:
-      - wordpress:/var/www/wordpress
-
-  # db:
-  #   restart: always
-  #   container_name: "db"
-  #   build:
-  #     context: .
-  #     dockerfile: requirements/mariadb/Dockerfile
-  #   networks:
-  #     - inception
-  #   expose:
-  #     - "3306"
-  #   environment:
-  #     MYSQL_DATABASE: wordpress
-  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #     MYSQL_USER: ${MYSQL_USER}
-  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  #   volumes:
-  #     - /Users/kmacquet/Desktop/cursus42/inception/data/mysql:/var/lib/mysql
-volumes:
-  wordpress:
-    driver_opts:
-      type: "local"
-      o: bind
-      device: "/Users/kmacquet/Desktop/cursus42/inception/data/wordpress"
-  db:
-    driver_opts:
-      type: "local"
-      o: bind
-      device: "/Users/kmacquet/Desktop/cursus42/inception/data/mysql"
 
 networks:
   inception:
-    name: inception
-    driver: bridge
