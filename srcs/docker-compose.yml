@@ -2,12 +2,38 @@ version: '3.0'
 
 services:
   nginx:
+    container_name: nginx
     build: requirements/nginx/.
     image: nginx
     ports:
       - 443:443
+    volumes:
+      - ../Data/wordpress:/var/www/localhost/wordpress
     networks:
       - inception
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress/.
+    image: wordpress
+    tty: true
+    volumes:
+      - ../Data/wordpress:/var/www/localhost/wordpress
+    networks:
+      - inception
+  # maria_db:
+  #   container_name: maria_db
+  #   build: requirements/maria_db/.
+  #   image: maria_db
+  #   tty: true
 
 networks:
   inception:
+    name: inception
+    driver: bridge
+
+# volumes:
+#   wordpress:
+#     driver_opts:
+#       type: "local"
+#       o: bind
+#       device: "../Data/wordpress"
