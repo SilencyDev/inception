@@ -4,9 +4,9 @@ services:
   nginx:
     container_name: nginx
     build: requirements/nginx/.
-    image: nginx
     ports:
       - 443:443
+    restart: on-failure
     volumes:
       - ../Data/wordpress:/var/www/localhost/wordpress
     networks:
@@ -14,17 +14,31 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/.
-    image: wordpress
     tty: true
+    environment:
+      WORDPRESS_HOST: ${WORDPRESS_HOST}
+      WORDPRESS_NAME: ${WORDPRESS_NAME}
+      WORDPRESS_USER: ${WORDPRESS_USER}
+      WORDPRESS_PASSWORD: ${WORDPRESS_PASSWORD}
+    restart: on-failure
     volumes:
       - ../Data/wordpress:/var/www/localhost/wordpress
     networks:
       - inception
-  # maria_db:
-  #   container_name: maria_db
-  #   build: requirements/maria_db/.
-  #   image: maria_db
-  #   tty: true
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb/.
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: on-failure
+    volumes:
+      - ../Data/mysql:/var/lib/mysql
+    networks:
+      - inception
 
 networks:
   inception:
