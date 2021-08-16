@@ -8,8 +8,8 @@ RUN chown -R mysql /var/lib/mysql
 RUN chmod 777 /var/lib/mysql
 
 COPY ./tools/start.sh ./start.sh
-COPY ./conf/createdb.sql ./createdb.sql
-COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+COPY ./conf/my.conf ./etc/my.cnf.d/my.cnf
+COPY ./conf/my.conf ./etc/mysql/my.cnf
 
 EXPOSE 3306
 

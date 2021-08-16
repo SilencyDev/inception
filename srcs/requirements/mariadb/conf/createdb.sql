@@ -1,6 +1,0 @@
-CREATE DATABASE IF NOT EXISTS 'Inception'
-DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE 'Inception'
-
-CREATE USER 'user' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES on *.* TO 'user';
