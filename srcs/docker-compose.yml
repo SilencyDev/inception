@@ -14,7 +14,6 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/.
-    tty: true
     environment:
       WORDPRESS_HOST: ${WORDPRESS_HOST}
       WORDPRESS_NAME: ${WORDPRESS_NAME}
@@ -28,7 +27,6 @@ services:
   mariadb:
     container_name: mariadb
     build: requirements/mariadb/.
-    tty: true
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_NAME: ${MYSQL_NAME}

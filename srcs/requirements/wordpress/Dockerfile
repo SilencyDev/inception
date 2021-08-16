@@ -10,6 +10,7 @@ RUN chown -R www-data:www-data /var/www/localhost/wordpress
 
 COPY ./conf/www.conf ./etc/php7/php-fpm.d/www.conf
 COPY ./tools/start.sh ./start.sh
+COPY ./conf/wp-config.php /var/www/localhost/wordpress
 
 EXPOSE 9000
 
