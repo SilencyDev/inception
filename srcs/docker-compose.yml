@@ -14,6 +14,8 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/.
+    depends_on: 
+      - mariadb
     environment:
       WORDPRESS_HOST: ${WORDPRESS_HOST}
       WORDPRESS_NAME: ${WORDPRESS_NAME}
