@@ -9,6 +9,7 @@ RUN apk add vim php7 php7-fpm php7-common \
 		php7-gettext php7-ldap php7-ctype php7-dom wget php7-phar
 RUN rm -rf /var/cache/apk/*
 RUN mkdir -p /var/www/localhost/wordpress
+RUN chmod -R 777 /var/www/localhost
 RUN addgroup -g 82 -S www-data
 RUN adduser -u 82 -D -S -G www-data www-data
 RUN chown -R www-data:www-data /var/www/localhost/wordpress

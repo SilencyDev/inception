@@ -20,13 +20,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'Inception' );
+define( 'DB_NAME', getenv('MYSQL_NAME') );
 
 /** MySQL database username */
-define( 'DB_USER', 'user' );
+define( 'DB_USER', getenv('MYSQL_USER') );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'password' );
+define( 'DB_PASSWORD', getenv('MYSQL_PASSWORD') );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'mariadb' );
@@ -77,6 +77,8 @@ $table_prefix = 'wp_';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
+define( 'WP_SITEURL', 'https://kmacquet.42.fr' );
+define( 'WP_HOME', 'https://kmacquet.42.fr' );
 define( 'WP_DEBUG', false );
 define('CONCATENATE_SCRIPTS', false);
 
