@@ -10,7 +10,7 @@ services:
       DOMAIN_NAME: ${DOMAIN_NAME}
     restart: on-failure
     volumes:
-      - /home/kmacquet/data/wordpress:/var/www/localhost/wordpress
+      - v_wordpress:/var/www/localhost/wordpress
     networks:
       - inception
   wordpress:
@@ -27,7 +27,7 @@ services:
       WP_USER_PASSWORD: ${WP_USER_PASSWORD}
     restart: on-failure
     volumes:
-      - /home/kmacquet/data/wordpress:/var/www/localhost/wordpress
+      - v_wordpress:/var/www/localhost/wordpress
     networks:
       - inception
   mariadb:
@@ -41,7 +41,7 @@ services:
       DOMAIN_NAME: ${DOMAIN_NAME}
     restart: on-failure
     volumes:
-      - /home/kmacquet/data/mysql:/var/lib/mysql
+      - v_mysql:/var/lib/mysql
     networks:
       - inception
 
@@ -49,3 +49,18 @@ networks:
   inception:
     name: inception
     driver: bridge
+
+volumes:
+  v_mysql:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/kmacquet/data/mysql'
+  v_wordpress:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/kmacquet/data/wordpress'
+    
