@@ -13,3 +13,6 @@
 all:
 	sudo bash host.sh
 	cd srcs && docker-compose up --build
+
+down: 
+	cd srcs && docker-compose down --volumes

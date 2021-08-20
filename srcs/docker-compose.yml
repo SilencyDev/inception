@@ -16,8 +16,6 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/.
-    depends_on: 
-      - mariadb
     environment:
       MYSQL_NAME: ${MYSQL_NAME}
       MYSQL_USER: ${MYSQL_USER}
