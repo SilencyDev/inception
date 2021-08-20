@@ -10,9 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-all:
+all: down
 	sudo bash host.sh
 	cd srcs && docker-compose up --build
 
 down: 
 	cd srcs && docker-compose down --volumes
+
+reset: down
+	sudo rm -rf ~/data/mysql/*
+	sudo rm -rf ~/data/mysql/*
+	cd srcs && docker-compose rm -f $(docker ps -a -q)
+	make all
