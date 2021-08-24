@@ -4,6 +4,7 @@ services:
   nginx:
     container_name: nginx
     build: requirements/nginx/.
+    image: nginx
     ports:
       - 443:443
     environment:
@@ -16,6 +17,7 @@ services:
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/.
+    image: wordpress
     environment:
       MYSQL_NAME: ${MYSQL_NAME}
       MYSQL_USER: ${MYSQL_USER}
@@ -33,6 +35,7 @@ services:
   mariadb:
     container_name: mariadb
     build: requirements/mariadb/.
+    image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_NAME: ${MYSQL_NAME}
@@ -44,6 +47,33 @@ services:
       - v_mysql:/var/lib/mysql
     networks:
       - inception
+  redis:
+    container_name: redis
+    build: requirements/redis/.
+    image: redis
+    environment:
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: on-failure
+    volumes:
+      - v_mysql:/var/lib/mysql
+      - v_wordpress:/var/www/localhost/wordpress
+  vsftpd:
+    container_name: vsftpd
+    build: requirements/vsftpd/.
+    image: vsftpd
+    environment:
+      FTP_USER: ${FTP_USER}
+      FTP_PASS: ${FTP_PASS}
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "21:21"
+    restart: on-failure
+    volumes:
+      - v_wordpress:/home/${FTP_USER}
 
 networks:
   inception:

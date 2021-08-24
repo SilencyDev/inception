@@ -1,7 +1,7 @@
 FROM alpine:3.13
 
 RUN apk update
-RUN apk add vim php7 php7-fpm php7-common \
+RUN apk add vim wget php7 php7-fpm php7-common \
 		php7-session php7-iconv php7-json \
 		php7-gd php7-curl php7-xml php7-mysqli \
 		php7-imap php7-cgi php7-pdo php7-pdo_mysql \

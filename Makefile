@@ -10,15 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-all: down
-	sudo bash host.sh
+all: init down
 	cd srcs && docker-compose up --build
 
-down: 
+down: init
 	cd srcs && docker-compose down --volumes
 
-reset: down
+init: 
+	sudo bash host.sh
+
+reset: init down
 	sudo rm -rf ~/data/mysql/*
-	sudo rm -rf ~/data/mysql/*
-	cd srcs && docker-compose rm -f $(docker ps -a -q)
+	sudo rm -rf ~/data/wordpress/*
+	cd srcs && sudo docker system prune -a --volumes
+	echo -e "y\n"
 	make all

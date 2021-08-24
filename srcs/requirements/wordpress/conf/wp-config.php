@@ -81,6 +81,8 @@ define( 'WP_SITEURL', 'https://kmacquet.42.fr' );
 define( 'WP_HOME', 'https://kmacquet.42.fr' );
 define( 'WP_DEBUG', false );
 define('CONCATENATE_SCRIPTS', false);
+define( 'WP_CACHE_KEY_SALT', 'kmacquet.42.fr:' );
+define( 'WP_REDIS_PASSWORD', 'password' );
 
 /* That's all, stop editing! Happy publishing. */
 
