@@ -22,6 +22,7 @@ init:
 reset: init down
 	sudo rm -rf ~/data/mysql/*
 	sudo rm -rf ~/data/wordpress/*
+	sudo rm -rf ~/data/grafana/*
 	cd srcs && sudo docker system prune -a --volumes
 	echo -e "y\n"
 	make all

@@ -18,6 +18,8 @@ services:
     container_name: wordpress
     build: requirements/wordpress/.
     image: wordpress
+    depends_on:
+      - mariadb
     environment:
       MYSQL_NAME: ${MYSQL_NAME}
       MYSQL_USER: ${MYSQL_USER}
@@ -59,6 +61,8 @@ services:
     volumes:
       - v_mysql:/var/lib/mysql
       - v_wordpress:/var/www/localhost/wordpress
+    networks:
+      - inception
   vsftpd:
     container_name: vsftpd
     build: requirements/vsftpd/.
@@ -74,6 +78,29 @@ services:
     restart: on-failure
     volumes:
       - v_wordpress:/home/${FTP_USER}
+    networks:
+      - inception
+  grafana:
+    container_name: grafana
+    build: requirements/grafana/.
+    image: grafana
+    depends_on: 
+      - wordpress
+    environment: 
+      - GF_SECURITY_ADMIN_USER=gfuser
+      - GF_SECURITY_ADMIN_USER=gfpass
+    environment:
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - 3000:3000
+    restart: on-failure
+    volumes:
+      - v_grafana:/var/lib/grafana
+      - v_wordpress:/var/www/localhost/wordpress
+    networks:
+      - inception
 
 networks:
   inception:
@@ -93,4 +120,10 @@ volumes:
       o: 'bind'
       type: 'none'
       device: '/home/kmacquet/data/wordpress'
+  v_grafana:
+    driver: local
+    driver_opts:
+      o: 'bind'
+      type: 'none'
+      device: '/home/kmacquet/data/grafana'
     
