@@ -101,6 +101,22 @@ services:
       - v_wordpress:/var/www/localhost/wordpress
     networks:
       - inception
+  adminer:
+    container_name: adminer
+    build: requirements/adminer/.
+    image: adminer
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_NAME: ${MYSQL_NAME}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      DOMAIN_NAME: ${DOMAIN_NAME}
+    restart: on-failure
+    volumes:
+      - v_mysql:/var/lib/mysql
+      - v_wordpress:/var/www/localhost/wordpress
+    networks:
+      - inception
 
 networks:
   inception:
