@@ -5,6 +5,8 @@ RUN apk add vim wget redis
 RUN rm -rf /var/cache/apk/*
 
 COPY ./tools/start.sh ./start.sh
-COPY ./conf/redis.conf /etc/redis/redis.conf
+COPY ./conf/redis.conf /etc/redis/myredis.conf
 
-CMD [ "redis-server", "/etc/redis/redis.conf" ]
+EXPOSE 6379
+
+CMD [ "ash", "start.sh" ]

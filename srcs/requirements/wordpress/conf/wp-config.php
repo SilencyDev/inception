@@ -37,6 +37,12 @@ define( 'DB_CHARSET', 'utf8' );
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', 'utf8_bin' );
 
+define( 'WP_REDIS_HOST', 'redis');
+define( 'WP_REDIS_PORT', '6379');
+define( 'WP_REDIS_DATABASE', 0 );
+define( 'WP_REDIS_TIMEOUT', 1 );
+define( 'WP_REDIS_READ_TIMEOUT', 1 );
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -82,7 +88,7 @@ define( 'WP_HOME', 'https://kmacquet.42.fr' );
 define( 'WP_DEBUG', false );
 define('CONCATENATE_SCRIPTS', false);
 define( 'WP_CACHE_KEY_SALT', 'kmacquet.42.fr:' );
-define( 'WP_REDIS_PASSWORD', 'password' );
+// define( 'WP_REDIS_PASSWORD', 'password' );
 
 /* That's all, stop editing! Happy publishing. */
 
