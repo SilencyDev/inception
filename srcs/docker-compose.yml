@@ -51,7 +51,7 @@ services:
       - inception
   redis:
     container_name: redis
-    build: requirements/redis/.
+    build: requirements/bonus/redis/.
     image: redis
     environment:
       MYSQL_NAME: ${MYSQL_NAME}
@@ -65,7 +65,7 @@ services:
       - inception
   vsftpd:
     container_name: vsftpd
-    build: requirements/vsftpd/.
+    build: requirements/bonus/vsftpd/.
     image: vsftpd
     environment:
       FTP_USER: ${FTP_USER}
@@ -82,7 +82,7 @@ services:
       - inception
   grafana:
     container_name: grafana
-    build: requirements/grafana/.
+    build: requirements/bonus/grafana/.
     image: grafana
     depends_on: 
       - wordpress
@@ -103,7 +103,7 @@ services:
       - inception
   adminer:
     container_name: adminer
-    build: requirements/adminer/.
+    build: requirements/bonus/adminer/.
     image: adminer
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
